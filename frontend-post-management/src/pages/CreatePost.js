@@ -4,7 +4,7 @@ import Toolbar from "../components/EditorToolbar";
 import Editor from "../components/Editor";
 import { createPost } from "../api/post.apicall";
 import StatusCodeUtility from "../utils/statusCode.Utility";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 
 const CreatePost = () => {
   const [title, setTitle] = useState("");
@@ -52,10 +52,14 @@ const CreatePost = () => {
   const handleCreatePost = async(data) =>{
     try {
         const response = await createPost(data)
-         if(response.status === StatusCodeUtility.Success){
+         if(response.status === StatusCodeUtility.Created){
           toast.success(response.data.message || "post created successfully")
+          window.location.href = "/"
          }
-         toast.error(response.data.message || "something went wrong")
+         else{
+          toast.error(response.data.message || "something went wrong")
+         }
+        
     } catch (error) {
          toast.error(error.response.message|| error.response.data.message|| error.message || "something went wrong")
     }
@@ -82,6 +86,7 @@ const CreatePost = () => {
           </button>
         </form>
       </main>
+    <ToastContainer/>
     </div>
   );
 };

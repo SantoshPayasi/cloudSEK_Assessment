@@ -10,9 +10,6 @@ class CommentService{
 
    static async deleteCommentService(filter){
     const deletedComment = await CommentRepository.delete(filter)
-    if(!deletedComment){
-        throw new Error("not able to delete comment")
-    }
     return deletedComment;
    }
 

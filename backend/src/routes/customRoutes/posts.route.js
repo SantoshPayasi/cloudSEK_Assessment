@@ -1,18 +1,33 @@
-import express from "express"
-import asyncHandler from "../../utils/asyncHandler.js"
-import PostController from "../../controller/posts.controller.js"
+import express from "express";
+import asyncHandler from "../../utils/asyncHandler.js";
+import PostController from "../../controller/posts.controller.js";
+import PostMiddlewares from "../../middleware/posts.middleware.js";
 
+const postsRouter = express.Router();
 
-const postsRouter = express.Router()
+postsRouter.post(
+  "/create",
+  asyncHandler(PostMiddlewares.createPostMiddleWare),
+  asyncHandler(PostController.createPost)
+);
 
+postsRouter.get("/getall", asyncHandler(PostController.getAllPosts));
 
-postsRouter.post("/create", asyncHandler(PostController.createPost))
+postsRouter.get(
+  "/getsingle",
+  asyncHandler(PostMiddlewares.getSinglePostMiddleWare),
+  asyncHandler(PostController.getSinglePost)
+);
 
-postsRouter.get("/getall", asyncHandler(PostController.getAllPosts))
+postsRouter.delete(
+  "/delete",
+  asyncHandler(PostMiddlewares.deletePostMiddleWare),
+  asyncHandler(PostController.deletePost)
+);
 
-postsRouter.get("/getsingle", asyncHandler(PostController.getSinglePost))
-
-postsRouter.delete("/delete", asyncHandler(PostController.deletePost))
-
-postsRouter.put("/update", asyncHandler(PostController.updatePost))
-export default postsRouter
+postsRouter.put(
+  "/update",
+  asyncHandler(PostMiddlewares.updatePostMiddleWare),
+  asyncHandler(PostController.updatePost)
+);
+export default postsRouter;

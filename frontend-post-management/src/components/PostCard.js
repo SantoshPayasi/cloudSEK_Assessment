@@ -6,7 +6,7 @@ import {
   updateComment,
 } from "../api/comment.apicall";
 import StatusCodeUtility from "../utils/statusCode.Utility.js";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 
 import { Edit3, Trash2, Fullscreen, User } from "lucide-react";
 import { deletePost, updatePostAPi } from "../api/post.apicall.js";
@@ -100,6 +100,7 @@ const PostCard = ({
           (comment) => comment._id !== id
         );
         setComments(updatedComments);
+        redirectService("/")
       }
     } catch (error) {
       toast.error(error.response.data.message || "Failed to delete comment");
