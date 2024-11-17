@@ -7,8 +7,8 @@ import {
 } from "../api/comment.apicall";
 import StatusCodeUtility from "../utils/statusCode.Utility.js";
 import { toast } from "react-toastify";
-import NewCommentToolbar from "./CommentToolbar";
-import { Edit3, Trash2, ViewIcon } from "lucide-react";
+
+import { Edit3, Trash2, Fullscreen, User } from "lucide-react";
 import { deletePost, updatePostAPi } from "../api/post.apicall.js";
 import Toolbar from "./EditorToolbar.js";
 
@@ -18,31 +18,54 @@ const PostCard = ({
   allcomments,
   showdeleteIcon,
   showEditIcon,
+  showViewIcon
 }) => {
+
   const [comments, setComments] = useState(post.comments || []);
-  const [newComment, setNewComment] = useState("");
-  const [showAllComments, setShowAllComments] = useState(false);
-  const [editingCommentId, setEditingCommentId] = useState(null);
-  const [editedContent, setEditedContent] = useState("");
   const [showModal, setShowModal] = useState(false);
 
   const redirectService = (modulename) => {
     window.location.href = modulename;
   };
 
-  const handleNewComment = () => {
+  const handleNewComment = (newComment) => {
     if (!newComment.trim()) return;
-    const data = { content: newComment, postId: post._id };
-    handleCreateComment(data);
+    const data = { content: newComment, postId:post._id };
+
+    handleCreateCommentAPi(data);
   };
 
-  const handleCreateComment = async (data) => {
+
+  const handleDeleteComment = (commentId) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this comment?"
+    );
+    if (confirmDelete) handleDeleteCommentAPiHandler(commentId);
+  };
+
+
+  const handleSaveEdit = (_id, updatedComment) => {
+    handleUpdateCommentAPiHandler(_id, { content: updatedComment });
+  };
+
+  const deletePosthandler = (postId) => {
+    if (window.confirm("Are you sure you want to delete this post?")) {
+      handleDeletePostAPi(postId);
+    }
+  };
+
+
+
+
+  // Api calls to perform actions in project .
+
+  const handleCreateCommentAPi = async (data) => {
     try {
       const response = await createNewComment(data);
       if (response.status === StatusCodeUtility.Created) {
         toast.success(response.data.message || "Comment added successfully");
-        setComments([...comments, response.data.data]);
-        setNewComment("");
+        setComments([response.data.data,...comments]);
+
       } else {
         toast.error(response.data.message || "Something went wrong");
       }
@@ -52,38 +75,16 @@ const PostCard = ({
     }
   };
 
-  const handleDeleteComment = (commentId) => {
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete this comment?"
-    );
-    if (confirmDelete) handleDeleteCommentAPiHandler(commentId);
-  };
-
-  const handleEditComment = (commentId, currentContent) => {
-    setEditingCommentId(commentId);
-    setEditedContent(currentContent);
-  };
-
-  const handleSaveEdit = (commentId) => {
-    handleUpdateCommentAPiHandler(commentId, { content: editedContent });
-  };
-
-  const deletePosthandler = (postId) => {
-    if (window.confirm("Are you sure you want to delete this post?")) {
-      handleDeletePostAPi(postId);
-    }
-  };
-
   const handleUpdateCommentAPiHandler = async (id, data) => {
     try {
       const response = await updateComment(id, data);
       if (response.status === StatusCodeUtility.Success) {
         toast.success(response.data.message || "Comment updated successfully");
+
         const updatedComments = comments.map((comment) =>
-          comment._id === id ? { ...comment, comment: editedContent } : comment
+          comment._id === id ? { ...comment, comment: data.content } : comment
         );
         setComments(updatedComments);
-        setEditingCommentId(null);
       }
     } catch (error) {
       toast.error(error.response.data.message || "Failed to update comment");
@@ -122,12 +123,14 @@ const PostCard = ({
     try {
       const response = await updatePostAPi(updatedPost);
 
+
       if (response.status === StatusCodeUtility.Success) {
         toast.success(response.data.message || "Post updated successfully");
 
         post.title = response.data.data.title;
         post.innerHTML = response.data.data.innerHTML;
         post.description = response.data.data.description;
+        return ;
       }
       toast.error(response.data.message || "Failed to update post");
     } catch (error) {
@@ -137,53 +140,55 @@ const PostCard = ({
     }
   };
 
-  const visibleComments = allcomments ? comments : comments.slice(0, 2);
+  const visibleComments = allcomments ? comments : comments.slice(0, 1);
 
   return (
-    <div className="border rounded-md shadow-md bg-white w-1/2">
-      <div className="bg-sky-200 p-4 flex justify-between items-start">
-        <div>
-          <h2 className="text-xl font-semibold">{post.title}</h2>
-          <p className="text-gray-600 text-sm">
+    <div className="border  rounded-md shadow-md bg-white w-1/2">
+      <div className=" relative bg-sky-100 p-4  flex flex-col justify-between items-start">
+      <div className="w-full flex justify-between">
+              <div className="mb-3">
+              <span className="inline"><User className=" border h-10 w-10 rounded-[50%] text-white bg-sky-500 inline" aria-label="read more"/></span>
+              <span className="inline-block ml-2 font-mono">user@cloudSEK</span>
+            </div>
+            <div className="flex space-x-4 text-gray-600 items-center">
+            <PostToolBar
+              showdeleteIcon={showdeleteIcon}
+              showEditIcon={showEditIcon}
+              showViewIcon={showViewIcon}
+              post={post}
+              onDelete={() => deletePosthandler(post._id)}
+              onEdit={setShowModal}
+              onView={() => {
+                redirectService(`/post/${post._id}`);
+              }}
+            />
+          </div>
+      </div>
+      
+        <div className="relative flex justify-between w-full pb-2">
+          <div>
+            <h2 className="text-xl font-medium">{post.title}</h2>
+            <div
+              className="mb-4 mt-2 text-gray-800 h-16"
+              dangerouslySetInnerHTML={{ __html: post.innerHTML }}
+            >
+            </div>
+          <p className="absolute text-gray-600 text-xs left-0 ">
             Posted on: {new Date(post.createdAt).toLocaleString()}
           </p>
-          <div
-            className="mt-4 text-gray-800"
-            dangerouslySetInnerHTML={{ __html: post.innerHTML }}
-          ></div>
-        </div>
-        <div className="flex space-x-4 text-gray-600">
-          <PostToolBar
-            showdeleteIcon={showdeleteIcon}
-            showEditIcon={showEditIcon}
-            post={post}
-            onDelete={() => deletePosthandler(post._id)}
-            onEdit={setShowModal}
-            onView={() => {
-              redirectService(`/post/${post._id}`);
-            }}
-          />
+          </div>
+          
         </div>
       </div>
 
-      <div className="mt-6 border-t pt-4">
-        <h3 className="text-lg font-medium pl-2">Comments</h3>
+      <div className="border-t pt-4">
 
-        <NewCommentToolbar
-          newComment={newComment}
-          setNewComment={setNewComment}
-          handleNewComment={handleNewComment}
-        />
 
         <CommentList
-          comments={visibleComments}
-          editingCommentId={editingCommentId}
-          setEditingCommentId={setEditingCommentId}
-          editedContent={editedContent}
-          setEditedContent={setEditedContent}
-          handleEditComment={handleEditComment}
-          handleSaveEdit={handleSaveEdit}
-          handleDeleteComment={handleDeleteComment}
+          comments = {visibleComments}
+          handleSaveEdit = {handleSaveEdit}
+          handleDeleteComment = {handleDeleteComment}
+          handleNewComment = {handleNewComment}
         />
 
         {showmore && comments.length > 0 && (
@@ -191,9 +196,9 @@ const PostCard = ({
             onClick={() => {
               window.location.href = `/post/${post._id}`;
             }}
-            className="mt-4 p-5 text-blue-600 hover:underline text-sm"
+            className=" p-2 text-blue-600 hover:underline text-sm"
           >
-            {showAllComments ? "Show Less" : "Show More"}
+           Show More
           </button>
         )}
       </div>
@@ -233,11 +238,11 @@ const Modal = ({ showModal, setShowModal, post, handleUpdatePost }) => {
   };
 
   useEffect(() => {
-    const range = saveCursorPosition(); 
+    const range = saveCursorPosition();
     if (ref.current) {
       ref.current.innerHTML = post.innerHTML;
     }
-    restoreCursorPosition(range); 
+    restoreCursorPosition(range);
   }, [post]);
 
   const handleTitleChange = (e) => {
@@ -318,6 +323,7 @@ const PostToolBar = ({
   onEdit,
   onDelete,
   onView,
+  showViewIcon
 }) => {
   return (
     <>
@@ -337,14 +343,16 @@ const PostToolBar = ({
           title="Delete Post"
         />
       )}
-      <ViewIcon
+      {showViewIcon && <Fullscreen
         className="cursor-pointer hover:text-red-600"
         size={20}
         onClick={() => onView()}
         title="Delete Post"
-      />
+      />}
     </>
   );
 };
+
+
 
 export default PostCard;

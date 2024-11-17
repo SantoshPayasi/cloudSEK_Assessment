@@ -25,7 +25,7 @@ const CreatePost = () => {
   };
 
   const handleContentChange = (e) => {
-    console.log(e.target.innerHTML, e.target.innerText, e.target.value)
+
     setContent(e.target.value);
     setInnerHTMLs({
       ...innerHTMLs,
@@ -44,7 +44,7 @@ const CreatePost = () => {
         description: innerHTMLs.description,
         innerHTML:innerHTMLs.content
     }
-    console.log(post)
+
     handleCreatePost(post)
   };
 
@@ -64,7 +64,7 @@ const CreatePost = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
-      <main className="container mx-auto mt-8">
+      <main className="container mx-auto mt-8 w-1/2">
         <form onSubmit={handleSubmit} className="space-y-6">
           <input
             type="text"

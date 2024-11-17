@@ -5,43 +5,7 @@ import { getSinglePost } from '../api/post.apicall'
 import { toast, ToastContainer } from "react-toastify";
 import PostCard from '../components/PostCard';
 
-// const PostPage = () => {
-//   const {id} = useParams()
-//   const [post, setPost] = useState({})
 
-//   const fetchPost = useCallback(async() => {
-
-//     try {
-//       const response = await getSinglePost(id)
-//       if(response.status === statusCodeUtility.Success){
-//         setPost(response.data.data)
-//         toast.success(response.data.message || "Post fetched successfully")
-//       }
-//     } catch (error) {
-//         toast.error(error.response.data.message || "Something went wrong")
-//     }
-    
-//   },[id])
-//   useEffect(() => {
-//     fetchPost()
-//   }, [fetchPost])
-//   return (
-//     <div className="min-h-screen bg-gray-50">
-//     <header className="bg-primary text-primary-foreground py-4 shadow-md">
-//       <h1 className="text-2xl font-bold text-center">Posts</h1>
-//     </header>
-
-//     <main className="container mx-auto mt-8 space-y-6 flex flex-col justify-center items-center">
-//       {post ? (
-//        <PostCard key={post._id} post={post} showmore={false} allcomments={true} showdeleteIcon={true} showEditIcon={true}/>)
-//       : (
-//         <p className="text-center text-gray-500">No post available</p>
-//       )}
-//     </main>
-//     <ToastContainer />
-//   </div>
-//   )
-// }
 
 
 const PostPage = () => {
@@ -65,6 +29,7 @@ const PostPage = () => {
             allcomments={true}
             showdeleteIcon={true}
             showEditIcon={true}
+            showViewIcon={false}
           />
         ) : null}
         {!loading && !error && !post && (
