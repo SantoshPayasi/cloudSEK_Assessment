@@ -23,6 +23,12 @@ class CommentService{
     }
     return updatedComment;
    }
+
+
+   static async deleteCommentsService(filter, options){
+      const deletedComments = await CommentRepository.deleteMany(filter, options)
+      return deletedComments;
+   }
 }
 
 

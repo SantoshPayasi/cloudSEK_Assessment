@@ -28,6 +28,12 @@ class PostsRepository{
         const newComment = await postsModel.findOneAndUpdate(filter, data, {new: true})
         return newComment
     }
+
+    static async findOndeAndDelete(filter, options = {}){
+      const deletedPost = await postsModel.findOneAndDelete(filter, options)
+      return deletedPost;
+    }
+
 }
 
 

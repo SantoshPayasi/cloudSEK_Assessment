@@ -1,6 +1,8 @@
+import mongoose from "mongoose";
 import PostsRepository from "../repositery/posts.repository.js";
 import { CustomError } from "../utils/errorHandler.utility.js";
 import statusCodeUtility from "../utils/statuscode.utility.js";
+import CommentService from "./comments.service.js";
 
 class PostServices {
 
@@ -22,11 +24,11 @@ class PostServices {
    }
 
    static async updateService(filter, data){
-      const newComment = await PostsRepository.findOneAndUpdate(filter, data)
-      if(!newComment){
-         throw new CustomError("not able to add comment", statusCodeUtility.Conflict)
+      const updatedPost = await PostsRepository.findOneAndUpdate(filter, data)
+      if(!updatedPost){
+         throw new CustomError("unable to update data", statusCodeUtility.Conflict)
       }
-      return newComment
+      return updatedPost
    }
 
    static async singlePostService(filter){
@@ -36,6 +38,40 @@ class PostServices {
       }
       return singlePost
    }
+
+   static async deletePostService(filter){
+      const session = await mongoose.startSession()
+
+      try {
+         await session.startTransaction()
+
+         const deletedPost = await PostsRepository.findOndeAndDelete(filter, {session})
+
+         if(!deletedPost){
+            await session.abortTransaction()
+            throw new CustomError("not able to delete post", statusCodeUtility.NotFound)
+         }
+         const payload = {postId:filter._id}
+
+
+         await CommentService.deleteCommentService(payload,{})
+
+
+         await session.commitTransaction()
+
+         return deletedPost
+
+      } catch (error) {
+         await session.abortTransaction()
+         throw new CustomError(error.message, statusCodeUtility.InternalServerError)
+
+      }finally{
+         await session.endSession()
+      }
+     
+   }
+   
+   
 }
 
 

@@ -1,15 +1,18 @@
 import { useState } from "react";
 import Header from "../components/Header";
-import Toolbar from "../components/Toolbar";
+import Toolbar from "../components/EditorToolbar";
 import Editor from "../components/Editor";
 import { createPost } from "../api/post.apicall";
+import StatusCodeUtility from "../utils/statusCode.Utility";
+import { toast } from "react-toastify";
 
 const CreatePost = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [innerHTMLs, setInnerHTMLs] = useState({
     title:"",
-    content:""
+    content:"",
+    description:""
   })
 
 
@@ -22,10 +25,12 @@ const CreatePost = () => {
   };
 
   const handleContentChange = (e) => {
+    console.log(e.target.innerHTML, e.target.innerText, e.target.value)
     setContent(e.target.value);
     setInnerHTMLs({
       ...innerHTMLs,
-      content: e.target.innerHTML
+      content: e.target.innerHTML,
+      description: e.target.innerText
     })
   };
 
@@ -36,9 +41,10 @@ const CreatePost = () => {
   const handleSubmit = () => {
     const post = {
         title : innerHTMLs.title, 
-        description: innerHTMLs.content
+        description: innerHTMLs.description,
+        innerHTML:innerHTMLs.content
     }
-    console.log(post);
+    console.log(post)
     handleCreatePost(post)
   };
 
@@ -46,9 +52,12 @@ const CreatePost = () => {
   const handleCreatePost = async(data) =>{
     try {
         const response = await createPost(data)
-        console.log(response)
+         if(response.status === StatusCodeUtility.Success){
+          toast.success(response.data.message || "post created successfully")
+         }
+         toast.error(response.data.message || "something went wrong")
     } catch (error) {
-        console.log(error)
+         toast.error(error.response.message|| error.response.data.message|| error.message || "something went wrong")
     }
   }
 

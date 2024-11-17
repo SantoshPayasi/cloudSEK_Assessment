@@ -6,6 +6,9 @@ const commentsRouter = express.Router()
 
 
 commentsRouter.post("/create", asyncHandler(CommentController.createComment))
+
 commentsRouter.delete("/delete", asyncHandler(CommentController.deleteComment))
+
 commentsRouter.put("/update", asyncHandler(CommentController.UpdateComment))
+
 export default commentsRouter

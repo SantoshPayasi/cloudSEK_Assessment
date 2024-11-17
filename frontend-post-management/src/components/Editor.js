@@ -3,7 +3,7 @@ const Editor = ({ onContentChange, content }) => (
       contentEditable
       onInput={onContentChange}
       className="min-h-[200px] mt-4 focus:outline-none p-2 border rounded-md bg-white"
-      dangerouslySetInnerHTML={{ __html: content || "Write your post content here..." }}
+      dangerouslySetInnerHTML={{ __html: content }}
     />
   );
   

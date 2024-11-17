@@ -5,10 +5,11 @@ import statusCodeUtility from "../utils/statuscode.utility.js";
 class PostController{
 
     static async createPost(request , response, next){
-        const{title, description} = request.body;
+        const{title, description, innerHTML} = request.body;
         const data = {
             title,
-            description
+            description,
+            innerHTML
         }
         const newPost = await PostServices.createnewpostService(data)
 
@@ -39,7 +40,25 @@ class PostController{
         return ResponseHandler(statusCodeUtility.Created, "comment added successfully", newComment, response)
     }
 
+    static async deletePost(request, response, next){
+        const {id} = request.query;
+        const deletedPost = await PostServices.deletePostService({_id: id})
+        return ResponseHandler(statusCodeUtility.Success, "post deleted successfully", deletedPost, response)
+    }
 
+    static async updatePost(request, response, next){
+        const {id} = request.query;
+        const {title, description, innerHTML} = request.body;
+        const data = {
+            title,
+            description,
+            innerHTML
+        }
+
+        console.log(id, data)
+        const updatedPost = await PostServices.updateService({_id: id}, data)
+        return ResponseHandler(statusCodeUtility.Success, "post updated successfully", updatedPost, response)
+    }   
 }
 
 

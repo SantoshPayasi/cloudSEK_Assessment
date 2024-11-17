@@ -12,4 +12,7 @@ postsRouter.get("/getall", asyncHandler(PostController.getAllPosts))
 
 postsRouter.get("/getsingle", asyncHandler(PostController.getSinglePost))
 
+postsRouter.delete("/delete", asyncHandler(PostController.deletePost))
+
+postsRouter.put("/update", asyncHandler(PostController.updatePost))
 export default postsRouter

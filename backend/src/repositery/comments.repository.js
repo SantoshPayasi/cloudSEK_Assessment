@@ -19,6 +19,11 @@ class CommentRepository{
         const comment = await commentsModel.findOneAndUpdate(filter, data, {new: true})
         return comment;
     }
+
+    static async deleteMany(filter, options ={}){
+        const deletedComments = await commentsModel.deleteMany(filter, options)
+        return deletedComments;
+    }
 }
 
 

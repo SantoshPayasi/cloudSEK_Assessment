@@ -23,3 +23,25 @@ export const getSinglePost = async(id) =>{
     const response = await axios.get("/getsingle", {params:{id:id}})
     return response
 }
+
+export const deletePost = async(id) =>{
+    const response = await axios.delete("/delete", {params:{id:id}})
+    return response
+}
+
+
+export const updatePostAPi = async(data) =>{
+    console.log("Dtaa is api", data)
+    const {title, description, innerHTML} = data
+    const response = await axios.put("/update", 
+       {
+        title:title,
+        description:description,
+        innerHTML:innerHTML
+       },
+       {params:{id:data.id}}
+       
+    )
+    return response
+}
+

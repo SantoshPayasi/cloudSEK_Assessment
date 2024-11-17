@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import CreatePost from "./pages/CreatePost";
 import './App.css';
-import PostPage from "./pages/PostPage";
+import PostPage from "./pages/PostPage.js";
 
 
 function App() {
@@ -11,7 +11,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/create-post" exact Component={CreatePost } />
-        <Route path="/:id" exact Component={PostPage } />
+        <Route path="/post/:id" exact Component={PostPage } />
       </Routes>
     </Router>
   );
