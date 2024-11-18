@@ -13,8 +13,8 @@ This full-stack application, developed for the CloudSEK assessment, combines a R
 
 ## 🌐 Live URLs
 
-- Frontend: [![https://cloud-sek-assessment-frontend.vercel.app](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://cloud-sek-assessment-frontend.vercel.app)
-- Backend: [![https://cloud-sek-assessment-backend.vercel.app](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://cloud-sek-assessment-backend.vercel.app)
+- Frontend: [![https://cloud-sek-assessment-frontend.vercel.app]](https://cloud-sek-assessment-frontend.vercel.app)
+- Backend: [![https://cloud-sek-assessment-backend.vercel.app]](https://cloud-sek-assessment-backend.vercel.app)
 
 ## 🛠️ Technology Stack
 
