@@ -1,4 +1,4 @@
-import { Edit, Trash, PenBox } from "lucide-react";
+import { Edit, Trash } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import Toolbar from "./EditorToolbar.js";
 
@@ -18,28 +18,31 @@ const CommentList = ({
     setShowModal(true);
   };
 
-  const handleModalSubmit = (updatedComment) => {
+  const handleModalSubmit = (updatedCommentinnerHTML, newComment) => {
     if (operationType === "createNew") {
-      handleNewComment(updatedComment);
+      handleNewComment(updatedCommentinnerHTML, newComment);
     } else if (operationType === "editOne") {
-      handleSaveEdit(editingComment._id, updatedComment);
+      handleSaveEdit(editingComment._id, updatedCommentinnerHTML, newComment);
     }
     setShowModal(false);
     setOperationType("");
-    setEditingComment("")
+    setEditingComment("");
   };
 
   return (
-    <div className="space-y-4">
+    <div className="">
       <div className=" w-full flex justify-between items-center px-2">
-        <h3 className="text-lg font-normal pl-2">Comments</h3>
-        <PenBox
-          className="cursor-pointer text-gray-500"
+        <h3 className="text-md font-normal pl-2">Comments</h3>
+        <button
+          type="button"
+          className=" px-2 text-sm rounded-sm py-1 bg-sky-500 text-white "
           onClick={() => {
             setOperationType("createNew");
             setShowModal(true);
           }}
-        />
+        >
+          Add New
+        </button>
       </div>
 
       {comments.map((comment) => (
@@ -53,7 +56,10 @@ const CommentList = ({
       {showModal && (
         <CommentModal
           comment={editingComment}
-          onClose={() =>{ setShowModal(false); setEditingComment(null)}}
+          onClose={() => {
+            setShowModal(false);
+            setEditingComment(null);
+          }}
           onSubmit={handleModalSubmit}
         />
       )}
@@ -62,13 +68,13 @@ const CommentList = ({
 };
 
 const CommentItem = ({ comment, onEdit, onDelete }) => (
-  <div className="p-2 border rounded-md bg-gray-50 border-none shadow-sm mx-2">
+  <div className="p-2 border rounded-md  my-2 border-gray-400 shadow-sm mx-2">
     <div className="w-full flex justify-between ">
       <div
         dangerouslySetInnerHTML={{ __html: comment.comment }}
         className="text-gray-800 text-sm"
       />
-      <div className="flex space-x-2 mt-2">
+      <div className="flex space-x-2 items-center h-full mt-2">
         <button
           onClick={onEdit}
           className="text-yellow-500 hover:text-yellow-700"
@@ -84,6 +90,7 @@ const CommentItem = ({ comment, onEdit, onDelete }) => (
 );
 
 export const CommentModal = ({ comment, onClose, onSubmit }) => {
+  const [newComment, setNewComment] = useState("")
   // const [content, setContent] = useState(comment ? comment.comment : "");
   const editorRef = useRef(null);
 
@@ -118,7 +125,8 @@ export const CommentModal = ({ comment, onClose, onSubmit }) => {
   };
 
   const handleSubmit = () => {
-    onSubmit(editorRef.current.innerHTML);
+    onSubmit(editorRef.current.innerHTML, newComment);
+    setNewComment("")
   };
 
   return (
@@ -132,7 +140,7 @@ export const CommentModal = ({ comment, onClose, onSubmit }) => {
           <div
             ref={editorRef}
             contentEditable
-            // onInput={(e) => setContent(e.target.innerHTML)}
+            onInput={(e) => setNewComment(e.target.innerText)}
             className="min-h-[200px] mt-4 focus:outline-none p-2 border rounded-md bg-white"
           />
         </div>

@@ -9,10 +9,12 @@ import statusCodeUtility from "../utils/statuscode.utility.js";
 class CommentController {
 
     static async createComment(request, response, next) {
-            const { content, postId } = request.body;
+            const { content, postId, commentText } = request.body;
+
             const data = {
                 comment:content,
-                postId
+                postId,
+                commentText
             }
             const newcomment = await CommentService.createCommentService(data)
 
@@ -35,8 +37,8 @@ class CommentController {
 
     static async UpdateComment(request, response, next) {
             const { id } = request.query;
-            const { content } = request.body;
-            const updatedComment = await CommentService.updateCommentService({ _id: id }, { comment: content })
+            const { content, commentText } = request.body;
+            const updatedComment = await CommentService.updateCommentService({ _id: id }, { comment: content , commentText})
 
             return ResponseHandler(statusCodeUtility.Success, "Updated Successfully", updatedComment, response)
     }

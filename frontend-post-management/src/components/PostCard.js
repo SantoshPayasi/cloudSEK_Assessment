@@ -28,9 +28,12 @@ const PostCard = ({
     window.location.href = modulename;
   };
 
-  const handleNewComment = (newComment) => {
-    if (!newComment.trim()) return;
-    const data = { content: newComment, postId:post._id };
+  const handleNewComment = (newCommentinnerHTML, commentText) => {
+    if (!commentText.trim()) {
+      toast.error("Comment cannot be empty");
+      return;
+    }
+    const data = { content: newCommentinnerHTML, commentText, postId:post._id };
 
     handleCreateCommentAPi(data);
   };
@@ -44,8 +47,8 @@ const PostCard = ({
   };
 
 
-  const handleSaveEdit = (_id, updatedComment) => {
-    handleUpdateCommentAPiHandler(_id, { content: updatedComment });
+  const handleSaveEdit = (_id, updatedComment, commentText) => {
+    handleUpdateCommentAPiHandler(_id, { content: updatedComment , commentText});
   };
 
   const deletePosthandler = (postId) => {
@@ -70,8 +73,8 @@ const PostCard = ({
         toast.error(response.data.message || "Something went wrong");
       }
     } catch (error) {
-      console.log(error);
-      toast.error("Something went wrong");
+
+      toast.error(error.response.data.message, "Something went wrong");
     }
   };
 
@@ -169,7 +172,7 @@ const PostCard = ({
           <div>
             <h2 className="text-xl font-medium">{post.title}</h2>
             <div
-              className="mb-4 mt-2 text-gray-800 h-16"
+              className="mb-4 mt-2 text-gray-800"
               dangerouslySetInnerHTML={{ __html: post.innerHTML }}
             >
             </div>
@@ -181,7 +184,7 @@ const PostCard = ({
         </div>
       </div>
 
-      <div className="border-t pt-4">
+      <div className="border-t pt-2">
 
 
         <CommentList

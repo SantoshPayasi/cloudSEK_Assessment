@@ -2,7 +2,6 @@ import commentsModel from "../models/comments.model.js"
 
 class CommentRepository{
     static async create(data){
-        console.log(data)
         const comment = await new commentsModel(data).save()
         return comment;
     }
