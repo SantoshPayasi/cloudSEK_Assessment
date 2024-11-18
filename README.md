@@ -1,20 +1,28 @@
-# CloudSEK Assessment Project
+# CloudSEK Assessment Project 🚀
 
-## Overview
-This full-stack application, developed for the CloudSEK assessment, combines a ReactJS frontend with an Express.js backend, utilizing MongoDB as the database.  
+[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
+[![Express.js](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
+[![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)](https://nodejs.org/)
 
-Note: Added mongoURI in .env and both .env files uploaded in github for reference and easy to setup .
+## 📖 Overview
 
-## Live URLs
-- Frontend: [https://cloud-sek-assessment-frontend.vercel.app](https://cloud-sek-assessment-frontend.vercel.app)
-- Backend: [https://cloud-sek-assessment-backend.vercel.app](https://cloud-sek-assessment-backend.vercel.app)
+This full-stack application, developed for the CloudSEK assessment, combines a ReactJS frontend with an Express.js backend, utilizing MongoDB as the database.
 
-## Technology Stack
+> **Note:** MongoDB URI is included in the `.env` files, which are uploaded to GitHub for reference and easy setup.
+
+## 🌐 Live URLs
+
+- Frontend: [![https://cloud-sek-assessment-frontend.vercel.app](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://cloud-sek-assessment-frontend.vercel.app)
+- Backend: [![https://cloud-sek-assessment-backend.vercel.app](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://cloud-sek-assessment-backend.vercel.app)
+
+## 🛠️ Technology Stack
+
 - Frontend: ReactJS, react-router-dom
 - Backend: Express.js
 - Database: MongoDB
 
-## Project Structure
+## 🗂️ Project Structure
 
 ### Backend Structure
 ```
@@ -64,43 +72,44 @@ frontend-post-management/
 └── tailwind.config.js
 ```
 
-## Setup Instructions
+## 🚀 Setup Instructions
 
 1. Clone the repository:
-   ```
+   ```bash
    git clone https://github.com/SantoshPayasi/cloudSEK_Assessment.git
    cd cloudSEK_Assessment
    ```
 
 2. Setup Backend:
-   ```
+   ```bash
    cd backend
    npm install
    ```
 
 3. Setup Frontend:
-   ```
+   ```bash
    cd ../frontend-post-management
    npm install
    ```
 
 4. Configuration:
-   - Backend: Check `constants.js` file and ensure the origin is set to "\*" or "http://localhost:3000"
+   - Backend: Check `constants.js` file and ensure the origin is set to "*" or "http://localhost:3000"
    - Frontend: In the `.env` file, verify that `REACT_APP_BACKEND_URL` is set to "http://localhost:3001"
 
 5. Running the application:
    - Start the backend server:
-     ```
+     ```bash
      cd backend
      npm run start
      ```
    - Start the frontend application:
-     ```
+     ```bash
      cd frontend-post-management
      npm run start
      ```
 
-## Important Notes
+## ⚠️ Important Notes
+
 - Ensure that the backend server is running on port 3001 as the frontend is configured to communicate with this port by default.
 - The backend entry file is `index.js` outside the `src` folder.
 - In the backend:
@@ -118,8 +127,7 @@ frontend-post-management/
   - Axios configurations are in the `config` folder.
   - API calls are in the `api` folder.
 
- 
-## Text Styling Feature Guide
+## 📝 Text Styling Feature Guide
 
 The frontend includes a rich text editing feature for comments and posts. Here's how to use it:
 
@@ -140,8 +148,16 @@ The frontend includes a rich text editing feature for comments and posts. Here's
 4. **Removing Styles**:
    - To remove a style, select the styled text and click the corresponding style icon again.
 
-Note: This feature enhances the visual appeal and functionality of your comments and posts, allowing for more expressive and informative content.
+> **Note:** This feature enhances the visual appeal and functionality of your comments and posts, allowing for more expressive and informative content.
 
-## Contributing
+## 🤝 Contributing
+
 For any contributions or issues, please open an issue or submit a pull request on the GitHub repository.
 
+## 📄 License
+
+[MIT](https://choosealicense.com/licenses/mit/)
+
+---
+
+[![Made with ❤️ by Santosh Payasi](https://img.shields.io/badge/Made%20with%20%E2%9D%A4%EF%B8%8F%20by-Santosh%20Payasi-red.svg)](https://github.com/SantoshPayasi)
