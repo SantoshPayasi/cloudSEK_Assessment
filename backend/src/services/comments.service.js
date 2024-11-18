@@ -1,4 +1,4 @@
-import CommentRepository from "../repositery/comments.repository.js";
+import CommentRepository from "../repository/comments.repository.js";
 
 class CommentService{
 

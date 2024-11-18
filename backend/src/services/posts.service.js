@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import PostsRepository from "../repositery/posts.repository.js";
+import PostsRepository from "../repository/posts.repository.js";
 import { CustomError } from "../utils/errorHandler.utility.js";
 import statusCodeUtility from "../utils/statuscode.utility.js";
 import CommentService from "./comments.service.js";

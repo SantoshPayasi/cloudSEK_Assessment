@@ -14,6 +14,7 @@ const CommentList = ({
 
   const handleEditClick = (comment) => {
     setEditingComment(comment);
+    setOperationType("editOne");
     setShowModal(true);
   };
 
@@ -25,6 +26,7 @@ const CommentList = ({
     }
     setShowModal(false);
     setOperationType("");
+    setEditingComment("")
   };
 
   return (
