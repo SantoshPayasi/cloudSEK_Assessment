@@ -1,7 +1,9 @@
 # CloudSEK Assessment Project
 
 ## Overview
-This full-stack application, developed for the CloudSEK assessment, combines a ReactJS frontend with an Express.js backend, utilizing MongoDB as the database.
+This full-stack application, developed for the CloudSEK assessment, combines a ReactJS frontend with an Express.js backend, utilizing MongoDB as the database.  
+
+Note: Added mongoURI and uploaded in github for reference and easy to setup .
 
 ## Live URLs
 - Frontend: [https://cloud-sek-assessment-frontend.vercel.app](https://cloud-sek-assessment-frontend.vercel.app)
