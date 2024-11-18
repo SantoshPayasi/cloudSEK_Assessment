@@ -10,7 +10,7 @@ Note: Added mongoURI and uploaded in github for reference and easy to setup .
 - Backend: [https://cloud-sek-assessment-backend.vercel.app](https://cloud-sek-assessment-backend.vercel.app)
 
 ## Technology Stack
-- Frontend: ReactJS
+- Frontend: ReactJS, react-router-dom
 - Backend: Express.js
 - Database: MongoDB
 
@@ -117,6 +117,30 @@ frontend-post-management/
   - Utility functions (like statusCodeUtility) are in the `utils` folder.
   - Axios configurations are in the `config` folder.
   - API calls are in the `api` folder.
+
+ 
+## Text Styling Feature Guide
+
+The frontend includes a rich text editing feature for comments and posts. Here's how to use it:
+
+1. **Selecting Text**: 
+   - Highlight the portion of text in a comment or post that you want to style.
+
+2. **Applying Styles**:
+   - Click on the desired styling icon in the toolbar.
+   - Available styles include bold, italic, hyperlink.
+   - If a style is already applied, clicking its icon will remove that style.
+
+3. **Creating Hyperlinks**:
+   - Select the text you want to turn into a link.
+   - Click the link icon in the toolbar.
+   - In the popup, enter the target URL for the link.
+   - Confirm to apply the hyperlink to the selected text.
+
+4. **Removing Styles**:
+   - To remove a style, select the styled text and click the corresponding style icon again.
+
+Note: This feature enhances the visual appeal and functionality of your comments and posts, allowing for more expressive and informative content.
 
 ## Contributing
 For any contributions or issues, please open an issue or submit a pull request on the GitHub repository.
