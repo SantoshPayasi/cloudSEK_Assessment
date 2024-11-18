@@ -102,7 +102,7 @@ frontend-post-management/
 
 ## Important Notes
 - Ensure that the backend server is running on port 3001 as the frontend is configured to communicate with this port by default.
-- The backend entry file is `index.js` in the `src` folder.
+- The backend entry file is `index.js` outside the `src` folder.
 - In the backend:
   - `app.js` contains the Express application setup.
   - Controllers are in the `controller` folder.
@@ -121,5 +121,3 @@ frontend-post-management/
 ## Contributing
 For any contributions or issues, please open an issue or submit a pull request on the GitHub repository.
 
-## License
-[Add your license information here]
