@@ -5,8 +5,8 @@ dotenv.config()
 
 
  const corsOptions = {
-    origin : "https://cloud-sek-assessment-frontend.vercel.app",
-    credentials :true 
+    // origin : "https://cloud-sek-assessment-frontend.vercel.app",
+    origin:"*"
 }
 
 
