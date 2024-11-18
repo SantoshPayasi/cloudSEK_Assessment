@@ -100,7 +100,6 @@ const PostCard = ({
           (comment) => comment._id !== id
         );
         setComments(updatedComments);
-        redirectService("/")
       }
     } catch (error) {
       toast.error(error.response.data.message || "Failed to delete comment");
@@ -112,7 +111,7 @@ const PostCard = ({
       const response = await deletePost(id);
       if (response.status === StatusCodeUtility.Success) {
         toast.success(response.data.message || "Post deleted successfully");
-        window.location.href = "/";
+        redirectService("/")
       }
       toast.error(response.data.message || "Failed to delete post");
     } catch (error) {
